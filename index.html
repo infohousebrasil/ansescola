@@ -1,67 +1,222 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANS Escola | Formação por Equivalência e Cursos Técnicos</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANS Escola</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
 
-    <header class="navbar">
-        <div class="container nav-container">
-            <div class="logo">
-                <img src="caminho-para-sua-logo.png" alt="ANS Escola" height="50">
-            </div>
-            <nav class="nav-links" id="nav-links">
-                <a href="#inicio">Início</a>
-                <a href="#sobre">Como Funciona</a>
-                <a href="#cursos">Cursos</a>
-                <a href="#matricula" class="btn-matricula-header">Fazer Matrícula</a>
-            </nav>
-            <button class="menu-toggle" id="mobile-menu">☰</button>
-        </div>
-    </header>
+<header class="header">
+<div class="container nav">
 
-    <section id="inicio" class="hero">
-        <div class="container hero-wrapper">
-            <div class="hero-content">
-                <h1>Sua Formação Técnica em 3 Dias</h1>
-                <p>Aproveite sua experiência profissional e conquiste seu diploma técnico por equivalência com reconhecimento em todo o Brasil.</p>
-                <div class="hero-buttons">
-                    <a href="#matricula" class="btn btn-red">Fazer Matrícula Agora</a>
-                    <a href="https://wa.me/5521987730608" class="btn btn-gray" target="_blank">Falar no WhatsApp</a>
-                </div>
-            </div>
-            <div class="hero-image-container">
-                <img src="caminho-para-foto-profissional-topo.jpg" alt="Profissional com diploma" class="hero-image">
-            </div>
-        </div>
-    </section>
+<div class="logo">
+ANS Escola
+</div>
 
-    <section id="cursos" class="courses">
-        <div class="container">
-            <h2>Nossos Cursos</h2>
-            <div class="grid-courses">
-                
-                <div class="card">
-                    <img src="caminho-foto-tecnico.jpg" alt="Cursos Técnicos" class="card-img">
-                    <h3>Técnicos & EAD</h3>
-                    <p>Segurança do Trabalho, TTI, Meio Ambiente, Logística, Radiologia e mais.</p>
-                    <a href="#matricula" class="btn-link">Matricule-se &rarr;</a>
-                </div>
+<nav id="menu">
+<a href="#sobre">Sobre</a>
+<a href="#funciona">Como Funciona</a>
+<a href="#cursos">Cursos</a>
+<a href="#diferenciais">Diferenciais</a>
+<a href="#contato">Contato</a>
+</nav>
 
-                <div class="card">
-                    <img src="caminho-foto-qualificacao.jpg" alt="Qualificação" class="card-img">
-                    <h3>Qualificação</h3>
-                    <p>Eletricista de Rede de Distribuição, Linha Viva, Predial/Industrial e outros.</p>
-                    <a href="#matricula" class="btn-link">Matricule-se &rarr;</a>
-                </div>
+<div class="menu-toggle" id="menuToggle">
+☰
+</div>
 
-            </div>
-        </div>
-    </section>
+</div>
+</header>
+
+
+<section class="hero">
+
+<div class="container hero-content">
+
+<h1>Conquiste seu Diploma Técnico</h1>
+
+<p>
+Cursos técnicos e profissionalizantes com avaliação de competências
+e aproveitamento da experiência profissional.
+</p>
+
+<div class="hero-buttons">
+
+<a href="formulario.html" class="btn-primary">
+Fazer Matrícula
+</a>
+
+<a href="#" class="btn-whatsapp">
+WhatsApp
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="sobre" class="section">
+
+<div class="container">
+
+<h2>Sobre a Escola</h2>
+
+<p>
+Aqui você coloca o mesmo texto institucional que já existe no site.
+Mantemos o conteúdo original, apenas reorganizado para leitura melhor.
+</p>
+
+</div>
+
+</section>
+
+
+<section id="funciona" class="section bg-light">
+
+<div class="container">
+
+<h2>Como Funciona</h2>
+
+<div class="steps">
+
+<div class="step">
+<span>1</span>
+<p>Cadastro do aluno</p>
+</div>
+
+<div class="step">
+<span>2</span>
+<p>Análise da experiência profissional</p>
+</div>
+
+<div class="step">
+<span>3</span>
+<p>Avaliação das competências</p>
+</div>
+
+<div class="step">
+<span>4</span>
+<p>Certificação</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="cursos" class="section">
+
+<div class="container">
+
+<h2>Cursos Técnicos</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>Segurança do Trabalho</h3>
+</div>
+
+<div class="card">
+<h3>Eletrotécnica</h3>
+</div>
+
+<div class="card">
+<h3>Radiologia</h3>
+</div>
+
+<div class="card">
+<h3>Mecatrônica</h3>
+</div>
+
+<div class="card">
+<h3>Logística</h3>
+</div>
+
+<div class="card">
+<h3>Petróleo e Gás</h3>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="diferenciais" class="section bg-light">
+
+<div class="container">
+
+<h2>Diferenciais</h2>
+
+<div class="features">
+
+<div class="feature">
+<h3>Flexibilidade</h3>
+<p>Estude de forma adaptada à sua rotina.</p>
+</div>
+
+<div class="feature">
+<h3>Ensino Moderno</h3>
+<p>Metodologia atual focada no mercado.</p>
+</div>
+
+<div class="feature">
+<h3>Certificação</h3>
+<p>Documentação válida e reconhecida.</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section class="cta">
+
+<div class="container">
+
+<h2>Garanta sua vaga</h2>
+
+<a href="formulario.html" class="btn-primary">
+Iniciar Matrícula
+</a>
+
+</div>
+
+</section>
+
+
+<footer id="contato">
+
+<div class="container footer">
+
+<p>ANS Escola</p>
+
+<p>Telefone / WhatsApp</p>
+
+<p>Email de contato</p>
+
+<p>CNPJ da empresa</p>
+
+</div>
+
+</footer>
+
+
+<script src="js/script.js"></script>
 
 </body>
 </html>
