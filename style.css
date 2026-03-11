@@ -1,4 +1,12 @@
-/* Configurações Globais */
+/* Variáveis de Cores da Empresa */
+:root {
+    --red-brand: #d32f2f; /* Vermelho forte para conversão */
+    --red-hover: #b71c1c;
+    --gray-dark: #333333; /* Cinza escuro para textos e rodapé */
+    --gray-light: #f5f5f5; /* Cinza claro para fundos de seções */
+    --white: #ffffff;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +15,8 @@
 }
 
 body {
-    background-color: #f8fafc;
-    color: #334155;
+    background-color: var(--white);
+    color: var(--gray-dark);
     line-height: 1.6;
 }
 
@@ -20,8 +28,8 @@ body {
 
 /* Navegação */
 .navbar {
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    background-color: var(--white);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -31,170 +39,174 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 70px;
+    height: 80px;
 }
 
-.logo {
-    font-size: 24px;
-    font-weight: 800;
-    color: #1e293b;
-}
-
-.logo span {
-    color: #2563eb; /* Azul Destaque */
+.nav-links {
+    display: flex;
+    align-items: center;
 }
 
 .nav-links a {
     text-decoration: none;
-    color: #475569;
+    color: var(--gray-dark);
     font-weight: 600;
-    margin-left: 20px;
+    margin-left: 25px;
     transition: color 0.3s;
 }
 
 .nav-links a:hover {
-    color: #2563eb;
+    color: var(--red-brand);
 }
 
-.menu-toggle {
-    display: none;
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #1e293b;
-}
-
-/* Hero Section */
-.hero {
-    background: linear-gradient(rgba(30, 41, 59, 0.9), rgba(30, 41, 59, 0.9)), url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80') center/cover;
-    color: white;
-    padding: 100px 0;
-    text-align: center;
-}
-
-.hero h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
+/* Botão de Matrícula no Header */
+.btn-matricula-header {
+    background-color: var(--red-brand);
+    color: var(--white) !important;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-transform: uppercase;
     font-weight: 800;
 }
 
-.hero p {
+.btn-matricula-header:hover {
+    background-color: var(--red-hover);
+}
+
+/* Hero Section (Fundo Cinza Claro) */
+.hero {
+    background-color: var(--gray-light);
+    padding: 60px 0;
+}
+
+.hero-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    color: var(--red-brand);
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero-content p {
     font-size: 1.2rem;
-    max-width: 700px;
-    margin: 0 auto 30px auto;
-    color: #cbd5e1;
+    margin-bottom: 30px;
+    color: var(--gray-dark);
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
 }
 
 .btn {
-    display: inline-block;
     padding: 15px 30px;
-    border-radius: 5px;
+    border-radius: 4px;
     text-decoration: none;
-    font-weight: 600;
-    transition: background 0.3s;
+    font-weight: 800;
+    text-transform: uppercase;
+    transition: 0.3s;
 }
 
-.btn-primary {
-    background-color: #2563eb;
-    color: white;
+.btn-red {
+    background-color: var(--red-brand);
+    color: var(--white);
 }
 
-.btn-primary:hover {
-    background-color: #1d4ed8;
+.btn-red:hover {
+    background-color: var(--red-hover);
+}
+
+.btn-gray {
+    background-color: var(--gray-dark);
+    color: var(--white);
+}
+
+.btn-gray:hover {
+    background-color: #000000;
+}
+
+/* Imagem do Hero */
+.hero-image-container {
+    flex: 1;
+}
+
+.hero-image {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
 /* Cursos */
 .courses {
     padding: 80px 0;
-    text-align: center;
+    background-color: var(--white);
 }
 
 .courses h2 {
+    text-align: center;
     font-size: 2.5rem;
+    color: var(--gray-dark);
     margin-bottom: 40px;
-    color: #1e293b;
 }
 
 .grid-courses {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
 }
 
 .card {
-    background: white;
-    padding: 30px;
+    background: var(--gray-light);
     border-radius: 8px;
+    overflow: hidden;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-    transition: transform 0.3s;
-    text-align: left;
 }
 
-.card:hover {
-    transform: translateY(-5px);
+.card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card h3, .card p, .card a {
+    padding: 0 20px;
 }
 
 .card h3 {
-    color: #2563eb;
-    margin-bottom: 15px;
+    color: var(--red-brand);
+    margin: 20px 0 10px 0;
 }
 
-/* Footer */
-.footer {
-    background-color: #0f172a;
-    color: #cbd5e1;
-    padding: 60px 0 20px 0;
+.card p {
+    margin-bottom: 20px;
 }
 
-.footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
-    margin-bottom: 40px;
+.btn-link {
+    display: inline-block;
+    color: var(--red-brand);
+    font-weight: 800;
+    text-decoration: none;
+    margin-bottom: 20px;
 }
 
-.footer h4 {
-    color: white;
-    margin-bottom: 15px;
-    font-size: 1.2rem;
-}
-
-.footer-bottom {
-    text-align: center;
-    border-top: 1px solid #334155;
-    padding-top: 20px;
-    font-size: 0.9rem;
-}
-
-/* Responsividade para Celulares */
+/* Responsividade */
 @media (max-width: 768px) {
-    .menu-toggle {
-        display: block;
-    }
-    
-    .nav-links {
-        display: none;
+    .hero-wrapper {
         flex-direction: column;
-        width: 100%;
-        position: absolute;
-        top: 70px;
-        left: 0;
-        background-color: white;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        padding: 20px 0;
-    }
-
-    .nav-links.active {
-        display: flex;
-    }
-
-    .nav-links a {
-        margin: 10px 0;
         text-align: center;
     }
-
-    .hero h1 {
-        font-size: 2rem;
+    
+    .hero-buttons {
+        flex-direction: column;
     }
 }
