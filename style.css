@@ -211,3 +211,69 @@ footer a {
     margin-left: 0;
   }
 }
+
+/* Estilos específicos para cursos.html */
+
+.cursos-hero {
+  background: linear-gradient(rgba(0, 74, 173, 0.9), rgba(0, 74, 173, 0.9)), url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80') center/cover no-repeat;
+  padding: 7rem 1rem 5rem;
+}
+
+.cursos-lista {
+  padding: 4rem 0;
+}
+
+.curso-categoria {
+  margin-bottom: 4rem;
+  background: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+}
+
+.curso-categoria h2 {
+  color: #004aad;
+  margin-bottom: 1.2rem;
+  font-size: 2rem;
+}
+
+.curso-itens {
+  list-style: none;
+  columns: 2;
+  column-gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.curso-itens li {
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+}
+
+.normas {
+  background: #004aad;
+  color: white;
+}
+
+.normas h2,
+.normas p,
+.normas ul {
+  color: white;
+}
+
+.normas .curso-itens li {
+  font-weight: 500;
+}
+
+.destaque {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #ffd700;
+  margin: 1rem 0;
+}
+
+/* Responsivo para listas em colunas */
+@media (max-width: 768px) {
+  .curso-itens {
+    columns: 1;
+  }
+}
