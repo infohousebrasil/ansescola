@@ -1,6 +1,8 @@
-const toggle = document.getElementById("menuToggle");
-const menu = document.getElementById("menu");
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.querySelector('.menu-toggle');
+  const menu = document.querySelector('.menu');
 
-toggle.addEventListener("click", () => {
-menu.classList.toggle("active");
+  toggle.addEventListener('click', () => {
+    menu.classList.toggle('active');
+  });
 });
