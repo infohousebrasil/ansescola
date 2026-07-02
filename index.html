@@ -1,101 +1,351 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ANS Escola | Cursos Técnicos EAD e Formação por Equivalência Profissional</title>
-  <meta name="description" content="Forme-se rápido em cursos técnicos, graduação e NRs aproveitando sua experiência profissional. ANS Escola – Matrículas abertas!">
-  <link rel="stylesheet" href="style.css"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explode o Bicho 🪳🐀🪰</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            touch-action: none;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a0033, #003300);
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+        
+        canvas {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        #score {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+            z-index: 100;
+            pointer-events: none;
+        }
+        
+        #instructions {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.8);
+            font-size: 18px;
+            text-align: center;
+            z-index: 100;
+            pointer-events: none;
+            text-shadow: 0 0 10px black;
+        }
+        
+        .start-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            color: white;
+        }
+        
+        button {
+            margin-top: 30px;
+            padding: 15px 40px;
+            font-size: 24px;
+            background: linear-gradient(#ff00ff, #00ffff);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px #ff00ff;
+        }
+    </style>
 </head>
 <body>
-
-  <header>
-    <div class="container">
-      <div class="logo">ANS Escola</div>
-      <nav class="menu">
-        <ul>
-          <li><a href="index.html">Início</a></li>
-          <li><a href="cursos.html">Cursos</a></li>
-          <li><a href="#empresas">Para Empresas</a></li>
-          <li><a href="contato.html">Contato</a></li>
-        </ul>
-      </nav>
-      <button class="menu-toggle" aria-label="Abrir menu">☰</button>
+    <div id="score">Pontos: 0</div>
+    <canvas id="game"></canvas>
+    
+    <div id="instructions">Toque nos bichos antes que fujam!</div>
+    
+    <div class="start-screen" id="startScreen">
+        <h1 style="font-size: 48px; margin-bottom: 20px;">🪳 Explode o Bicho 🐀</h1>
+        <p style="font-size: 24px; max-width: 400px; text-align: center; margin-bottom: 30px;">
+            Toque nos ratos, baratas e moscas que aparecem!<br>
+            Quanto mais rápido, mais pontos!
+        </p>
+        <button onclick="startGame()">COMEÇAR</button>
     </div>
-  </header>
 
-  <section class="hero">
-    <div class="container">
-      <h1>Em até <strong>3 dias</strong> você se forma Técnico</h1>
-      <p class="lead">Aproveitamos sua experiência profissional ou cursos compatíveis para aprovação rápida via <strong>Equivalência Profissional</strong>.</p>
-      <div class="hero-buttons">
-        <a href="cursos.html" class="btn primary">Conheça os Cursos</a>
-        <a href="https://wa.me/5521987730608?text=Quero%20saber%20mais%20sobre%20formação%20r%C3%A1pida" class="btn whatsapp">Fale no WhatsApp</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="destaques container">
-    <div class="card">
-      <h3>Cursos Técnicos EAD</h3>
-      <p>Eletrotécnico, Segurança do Trabalho, Enfermagem, Mecatrônica, Logística e muitos outros.</p>
-      <a href="cursos.html">Ver lista completa →</a>
-    </div>
-    <div class="card">
-      <h3>Graduação</h3>
-      <p>Pedagogia, Administração, Engenharia, Segurança do Trabalho, Educação Física e mais.</p>
-      <a href="cursos.html">Saiba mais →</a>
-    </div>
-    <div class="card">
-      <h3>NRs e Qualificação</h3>
-      <p>NR-10, NR-35, Eletricista Predial/Industrial, Mecânica, Primeiros Socorros e cursos para empresas.</p>
-      <a href="#empresas">Para empresas →</a>
-    </div>
-  </section>
-
-  <section id="empresas" class="empresas container">
-    <h2>Cursos para Empresas – Normas Regulamentadoras</h2>
-    <p>Mais de 10 anos de experiência com treinamentos teóricos + práticos (NR-10, NR-35, NR-12, NR-33, NR-18 e outras).</p>
-    <a href="https://wa.me/5521987730608?text=Quero%20cotar%20treinamento%20NR%20para%20minha%20empresa" class="btn primary">Solicitar orçamento</a>
-  </section>
-
-<section class="parceiros">
-  <div class="container">
-    <h2>Empresas Parceiras</h2>
-    <div class="logo-slider">
-      <div class="slider-track">
-        <!-- Lista de logos – duplicamos para loop infinito suave -->
-        <div class="slider-item"><img src="https://ansescola.com/wp-content/uploads/elementor/thumbs/selo-mec-faculdade-qlne4oakgvzm9vf4c1i96k1sfiqftc5aq159y5e4kw.png" alt=""></div>
-        <div class="slider-item"><img src="https://ansescola.com/wp-content/uploads/2024/03/logocrea-1024x286.png" alt="Empresa Parceira B"></div>
-        <div class="slider-item"><img src="https://ansescola.com/wp-content/uploads/elementor/thumbs/enelbrasil-rkdgcw44q2g2r9bxtgtpzxgwwjbestjp0x18uw9876.jpeg" alt="Empresa Parceira C"></div>
-        <div class="slider-item"><img src="https://via.placeholder.com/180x80/004aad/ffffff?text=Empresa+D" alt="Empresa Parceira D"></div>
-        <div class="slider-item"><img src="https://via.placeholder.com/180x80/004aad/ffffff?text=Empresa+E" alt="Empresa Parceira E"></div>
-        <div class="slider-item"><img src="https://via.placeholder.com/180x80/004aad/ffffff?text=Empresa+F" alt="Empresa Parceira F"></div>
+    <script>
+        const canvas = document.getElementById('game');
+        const ctx = canvas.getContext('2d');
+        const scoreElement = document.getElementById('score');
         
-        <!-- Duplicação para loop infinito sem quebra -->
-        <div class="slider-item"><img src="https://via.placeholder.com/180x80/004aad/ffffff?text=Empresa+A" alt="Empresa Parceira A"></div>
-        <div class="slider-item"><img src="https://via.placeholder.com/180x80/004aad/ffffff?text=Empresa+B" alt="Empresa Parceira B"></div>
-        <div class="slider-item"><img src="" alt="Empresa Parceira C"></div>
-        <div class="slider-item"><img src="https://via.placeholder.com/180x80/004aad/ffffff?text=Empresa+D" alt="Empresa Parceira D"></div>
-        <div class="slider-item"><img src="https://via.placeholder.com/180x80/004aad/ffffff?text=Empresa+E" alt="Empresa Parceira E"></div>
-        <div class="slider-item"><img src="https://via.placeholder.com/180x80/004aad/ffffff?text=Empresa+F" alt="Empresa Parceira F"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-  <footer>
-    <div class="container">
-      <p>ANS Curso de Qualificação e Educação Profissional Técnico – CNPJ 15.131.738/0001-65</p>
-      <p>📍 Itaboraí/RJ (Caixa Postal) | Polo Saquarema/RJ</p>
-      <p>WhatsApp: (21) 98773-0608 | contato@ansescola.com</p>
-      <p class="copy">&copy; 2026 ANS Escola. Todos os direitos reservados.</p>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
+        let width, height;
+        let score = 0;
+        let creatures = [];
+        let particles = [];
+        let gameRunning = false;
+        let lastSpawn = 0;
+        
+        // Tipos de criaturas
+        const creatureTypes = [
+            { emoji: '🐀', size: 60, speed: 1.8, points: 10, name: 'rato' },
+            { emoji: '🪳', size: 55, speed: 2.2, points: 15, name: 'barata' },
+            { emoji: '🪰', size: 45, speed: 3.0, points: 20, name: 'mosca' }
+        ];
+        
+        class Creature {
+            constructor() {
+                this.type = creatureTypes[Math.floor(Math.random() * creatureTypes.length)];
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.angle = Math.random() * Math.PI * 2;
+                this.speed = this.type.speed + Math.random() * 1.5;
+                this.size = this.type.size;
+                this.life = 3000 + Math.random() * 2000; // tempo de vida em ms
+                this.createdAt = Date.now();
+                this.wobble = 0;
+            }
+            
+            update() {
+                this.wobble += 0.2;
+                
+                // Movimento aleatório com wobble
+                this.angle += (Math.random() - 0.5) * 0.4;
+                
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed;
+                
+                // Bater nas bordas
+                if (this.x < 0 || this.x > width) this.angle = Math.PI - this.angle;
+                if (this.y < 0 || this.y > height) this.angle = -this.angle;
+                
+                // Manter dentro da tela
+                this.x = Math.max(this.size/2, Math.min(width - this.size/2, this.x));
+                this.y = Math.max(this.size/2, Math.min(height - this.size/2, this.y));
+            }
+            
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle + Math.sin(this.wobble) * 0.3);
+                
+                ctx.font = `${this.size}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.shadowColor = '#00ffcc';
+                ctx.shadowBlur = 15;
+                ctx.fillText(this.type.emoji, 0, 0);
+                
+                ctx.restore();
+            }
+        }
+        
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 12;
+                this.vy = (Math.random() - 0.5) * 12;
+                this.life = 60 + Math.random() * 40;
+                this.color = color;
+                this.size = 6 + Math.random() * 8;
+            }
+            
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy += 0.3; // gravidade
+                this.life--;
+                this.size *= 0.97;
+            }
+            
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.life / 80;
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 20;
+                ctx.shadowColor = this.color;
+                ctx.fillRect(this.x - this.size/2, this.y - this.size/2, this.size, this.size);
+                ctx.restore();
+            }
+        }
+        
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        
+        function spawnCreature() {
+            if (!gameRunning) return;
+            creatures.push(new Creature());
+            lastSpawn = Date.now();
+        }
+        
+        function createExplosion(x, y) {
+            const colors = ['#ff0088', '#00ffff', '#ffff00', '#88ff00', '#ff8800', '#8800ff'];
+            
+            for (let i = 0; i < 45; i++) {
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particles.push(new Particle(x, y, color));
+            }
+            
+            // Explosão maior central
+            for (let i = 0; i < 20; i++) {
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const p = new Particle(x, y, color);
+                p.vx *= 1.6;
+                p.vy *= 1.6;
+                p.size *= 1.5;
+                particles.push(p);
+            }
+        }
+        
+        function checkHit(x, y) {
+            for (let i = creatures.length - 1; i >= 0; i--) {
+                const c = creatures[i];
+                const dx = c.x - x;
+                const dy = c.y - y;
+                const distance = Math.sqrt(dx*dx + dy*dy);
+                
+                if (distance < c.size * 0.7) {
+                    score += c.type.points;
+                    scoreElement.textContent = `Pontos: ${score}`;
+                    
+                    createExplosion(c.x, c.y);
+                    creatures.splice(i, 1);
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        function gameLoop() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Fundo sutil
+            ctx.fillStyle = 'rgba(10, 0, 30, 0.3)';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Atualizar e desenhar criaturas
+            for (let i = creatures.length - 1; i >= 0; i--) {
+                const c = creatures[i];
+                c.update();
+                c.draw();
+                
+                // Remover se tempo de vida acabou
+                if (Date.now() - c.createdAt > c.life) {
+                    creatures.splice(i, 1);
+                }
+            }
+            
+            // Atualizar e desenhar partículas
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.update();
+                p.draw();
+                if (p.life <= 0) particles.splice(i, 1);
+            }
+            
+            // Spawn aleatório
+            if (gameRunning && Date.now() - lastSpawn > 600 + Math.random() * 800) {
+                spawnCreature();
+            }
+            
+            // Aumentar dificuldade com o tempo
+            if (score > 200 && Math.random() < 0.02) {
+                spawnCreature();
+            }
+            
+            requestAnimationFrame(gameLoop);
+        }
+        
+        function startGame() {
+            document.getElementById('startScreen').style.display = 'none';
+            gameRunning = true;
+            score = 0;
+            scoreElement.textContent = 'Pontos: 0';
+            creatures = [];
+            particles = [];
+            
+            // Spawn inicial
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => spawnCreature(), i * 400);
+            }
+        }
+        
+        // Controles
+        function handleClick(e) {
+            if (!gameRunning) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            let clientX, clientY;
+            
+            if (e.touches) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+            
+            const x = clientX - rect.left;
+            const y = clientY - rect.top;
+            
+            checkHit(x, y);
+        }
+        
+        // Eventos
+        canvas.addEventListener('click', handleClick);
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            handleClick(e);
+        });
+        
+        window.addEventListener('resize', resize);
+        
+        // Iniciar
+        resize();
+        gameLoop();
+        
+        // Dica: Salve este código como index.html e abra no navegador (funciona perfeitamente no celular)
+    </script>
 </body>
 </html>
+Como usar:
+Copie todo o código acima
+Cole em um arquivo novo chamado index.html
+Abra o arquivo no navegador (no celular ou no PC)
+Toque na tela para começar
+Funcionalidades:
+Tela cheia
+Suporte total a toque
+Três tipos de bichos (rato, barata e mosca)
+Movimento orgânico com balanço
+Explosões coloridas com arco-íris
+Sistema de pontuação
+Dificuldade aumenta com o tempo
+Quer que eu melhore alguma coisa? (mais tipos de bichos, sons, níveis, recorde, etc.)
