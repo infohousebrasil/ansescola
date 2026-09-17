@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel CRM - ANS Escola</title>
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-hover: #1e40af;
+      --danger: #dc2626;
+      --success: #16a34a;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --border: #cbd5e1;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* Tela de Login */
+    #telaLogin { display: flex; justify-content: center; align-items: center; height: 100vh; }
+    .login-box { background: var(--card); padding: 32px; border-radius: 12px; width: 100%; max-width: 400px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .login-box h2 { text-align: center; color: var(--primary); margin-bottom: 20px; }
+    .login-box input { width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid var(--border); border-radius: 6px; }
+    .login-box button { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+
+    /* Painel Principal */
+    #painelCRM { display: none; padding: 24px; max-width: 1300px; margin: 0 auto; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; background: var(--card); padding: 16px 24px; border-radius: 8px; border: 1px solid var(--border); }
+    header h1 { font-size: 1.5rem; color: var(--primary); }
+    .btn-logout { background: #64748b; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+
+    /* Ações e Busca */
+    .actions-bar { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+    .search-input { flex: 1; min-width: 280px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; }
+    .btn-action { padding: 10px 16px; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+    .btn-action:hover { background: var(--primary-hover); }
+
+    /* Tabela */
+    .table-responsive { background: var(--card); border-radius: 8px; border: 1px solid var(--border); overflow-x: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+    th, td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    th { background: #f8fafc; color: #475569; font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+    
+    .badge-id { background: #e0f2fe; color: #0369a1; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85rem; display: inline-block; }
+    .badge-origem { background: #f1f5f9; color: #475569; padding: 3px 6px; border-radius: 4px; font-size: 0.75rem; }
+    
+    /* Botões na Tabela */
+    .btn-view { background: #2563eb; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.8rem; }
+    .btn-delete { background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.8rem; }
+
+    /* Modais */
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(2px); justify-content: center; align-items: center; z-index: 1000; padding: 20px; }
+    .modal-content { background: white; padding: 28px; border-radius: 12px; width: 100%; max-width: 750px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    .modal-header h3 { color: var(--primary); font-size: 1.3rem; }
+    .close-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #64748b; }
+
+    /* Ficha do Aluno (Grid de Detalhes) */
+    .section-title { font-size: 0.9rem; font-weight: 700; color: var(--primary); text-transform: uppercase; margin: 16px 0 10px 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; }
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 12px; }
+    .info-item { background: #f8fafc; padding: 10px 12px; border-radius: 6px; border: 1px solid #e2e8f0; }
+    .info-item label { display: block; font-size: 0.75rem; color: #64748b; font-weight: 600; text-transform: uppercase; margin-bottom: 2px; }
+    .info-item span { font-size: 0.95rem; color: #0f172a; font-weight: 500; word-break: break-word; }
+
+    .obs-textarea { width: 100%; height: 90px; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.9rem; margin-top: 6px; outline: none; }
+    .obs-textarea:focus { border-color: var(--primary); }
+    .btn-save-obs { background: var(--success); color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; margin-top: 8px; width: 100%; }
+
+    /* Inputs do Modal de Aluno Antigo */
+    .form-antigo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .form-antigo-grid input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; }
+  </style>
+</head>
+<body>
+
+<!-- 1. TELA DE LOGIN -->
+<div id="telaLogin">
+  <div class="login-box">
+    <h2>Acesso ao CRM</h2>
+    <form id="formLogin">
+      <input type="email" id="loginEmail" placeholder="E-mail do Administrador" required>
+      <input type="password" id="loginSenha" placeholder="Senha" required>
+      <button type="submit">Entrar no Sistema</button>
+    </form>
+  </div>
+</div>
+
+<!-- 2. PAINEL PRINCIPAL CRM -->
+<div id="painelCRM">
+  <header>
+    <h1>Gestão de Alunos - ANS Escola</h1>
+    <button class="btn-logout" id="btnLogout">Sair</button>
+  </header>
+
+  <div class="actions-bar">
+    <input type="text" id="inputBusca" class="search-input" placeholder="🔍 Buscar por Nome, CPF, E-mail ou ID...">
+    <button class="btn-action" id="btnAbrirModalAntigo">+ Cadastrar Aluno Antigo (Sem ID)</button>
+  </div>
+
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>ID Matrícula</th>
+          <th>Nome do Aluno</th>
+          <th>CPF</th>
+          <th>Telefone / WhatsApp</th>
+          <th>E-mail</th>
+          <th>Status Financeiro</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="tabelaAlunosBody">
+        <tr><td colspan="7" style="text-align:center; padding: 20px;">Carregando alunos...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 3. MODAL: FICHA COMPLETA DO ALUNO (TODOS OS DADOS) -->
+<div id="modalFicha" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Ficha Cadastral do Aluno</h3>
+      <button class="close-btn" onclick="fecharModal('modalFicha')">&times;</button>
+    </div>
+
+    <div id="conteudoFicha">
+      <!-- Preenchido dinamicamente via JS com todos os dados -->
+    </div>
+  </div>
+</div>
+
+<!-- 4. MODAL: CADASTRAR ALUNO ANTIGO (SEM ID) -->
+<div id="modalAntigo" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Cadastrar Aluno Antigo / Migrado</h3>
+      <button class="close-btn" onclick="fecharModal('modalAntigo')">&times;</button>
+    </div>
+    
+    <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 16px;">
+      Como este aluno veio do e-mail antigo, um ID do tipo <strong>ANS-LEG-XXXX</strong> será gerado automaticamente.
+    </p>
+
+    <form id="formAlunoAntigo">
+      <div class="form-antigo-grid">
+        <input type="text" id="antigoNome" placeholder="Nome Completo *" required>
+        <input type="email" id="antigoEmail" placeholder="E-mail *" required>
+        <input type="tel" id="antigoTelefone" placeholder="Telefone / WhatsApp">
+        <input type="text" id="antigoCpf" placeholder="CPF">
+        <input type="text" id="antigoRg" placeholder="RG">
+        <input type="date" id="antigoDataNasc" placeholder="Data Nasc.">
+        <input type="text" id="antigoNomeMae" placeholder="Nome da Mãe">
+        <input type="text" id="antigoNomePai" placeholder="Nome do Pai">
+        <input type="text" id="antigoEndereco" placeholder="Endereço">
+        <input type="text" id="antigoBairro" placeholder="Bairro">
+        <input type="text" id="antigoCidade" placeholder="Cidade">
+        <input type="text" id="antigoEstado" placeholder="UF (Ex: SP)">
+        <input type="text" id="antigoCep" placeholder="CEP">
+      </div>
+
+      <div style="margin-top: 12px;">
+        <label style="font-size: 0.8rem; font-weight:bold;">Observações de Pagamento / Histórico:</label>
+        <textarea id="antigoObs" class="obs-textarea" placeholder="Ex: Pagamentos em dia de 2025. Restam 2 parcelas..."></textarea>
+      </div>
+      
+      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top: 16px;">
+        <button type="button" class="btn-logout" onclick="fecharModal('modalAntigo')">Cancelar</button>
+        <button type="submit" class="btn-action">Salvar Registro</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- SDKs do Firebase (Modulo Web JS) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import { getFirestore, collection, onSnapshot, doc, setDoc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  // === COLE SUAS CHAVES DO FIREBASE AQUI ===
+ const firebaseConfig = {
+    apiKey: "AIzaSyBn7H0bXCeP76zqi1x3k-HkSye6zTBEVVc",
+    authDomain: "ans-escola.firebaseapp.com",
+    projectId: "ans-escola",
+    storageBucket: "ans-escola.firebasestorage.app",
+    messagingSenderId: "487646422159",
+    appId: "1:487646422159:web:b1a663471150672067bcfa"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  let listaAlunos = [];
+
+  // Controle de Sessão de Login
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      document.getElementById("telaLogin").style.display = "none";
+      document.getElementById("painelCRM").style.display = "block";
+      carregarAlunos();
+    } else {
+      document.getElementById("telaLogin").style.display = "flex";
+      document.getElementById("painelCRM").style.display = "none";
+    }
+  });
+
+  // Login
+  document.getElementById("formLogin").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, document.getElementById("loginEmail").value, document.getElementById("loginSenha").value);
+    } catch (err) {
+      alert("Erro ao fazer login: " + err.message);
+    }
+  });
+
+  // Logout
+  document.getElementById("btnLogout").addEventListener("click", () => signOut(auth));
+
+  // Buscar Alunos em Tempo Real
+  function carregarAlunos() {
+    onSnapshot(collection(db, "alunos"), (snapshot) => {
+      listaAlunos = [];
+      snapshot.forEach((docSnap) => {
+        listaAlunos.push({ id: docSnap.id, ...docSnap.data() });
+      });
+      renderizarTabela(listaAlunos);
+    });
+  }
+
+  // Renderizar a Tabela Principal
+  function renderizarTabela(dados) {
+    const tbody = document.getElementById("tabelaAlunosBody");
+    tbody.innerHTML = "";
+
+    if (dados.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:20px;">Nenhum aluno encontrado.</td></tr>';
+      return;
+    }
+
+    dados.forEach((aluno) => {
+      const tr = document.createElement("tr");
+      
+      const temObs = aluno.observacoesPagamento && aluno.observacoesPagamento.trim() !== "";
+      const statusObsHtml = temObs 
+        ? `<span style="color:#16a34a; font-weight:600;">📝 Com Notas</span>` 
+        : `<span style="color:#94a3b8;">Sem notas</span>`;
+
+      tr.innerHTML = `
+        <td><span class="badge-id">${aluno.idMatricula || aluno.id}</span></td>
+        <td><strong>${aluno.nome || '-'}</strong></td>
+        <td>${aluno.cpf || '-'}</td>
+        <td>${aluno.telefone || '-'}</td>
+        <td>${aluno.email || '-'}</td>
+        <td>${statusObsHtml}</td>
+        <td>
+          <button class="btn-view" onclick="verFichaCompleta('${aluno.id}')">👁️ Ver Tudo</button>
+          <button class="btn-delete" onclick="excluirAluno('${aluno.id}')">🗑️ Apagar</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Busca Filtro em Tempo Real
+  document.getElementById("inputBusca").addEventListener("input", (e) => {
+    const termo = e.target.value.toLowerCase();
+    const filtrados = listaAlunos.filter(a => 
+      (a.nome && a.nome.toLowerCase().includes(termo)) ||
+      (a.cpf && a.cpf.toLowerCase().includes(termo)) ||
+      (a.email && a.email.toLowerCase().includes(termo)) ||
+      (a.idMatricula && a.idMatricula.toLowerCase().includes(termo))
+    );
+    renderizarTabela(filtrados);
+  });
+
+  // EXIBIR TODOS OS DADOS DO ALUNO NO MODAL
+  window.verFichaCompleta = (alunoId) => {
+    const aluno = listaAlunos.find(a => a.id === alunoId);
+    if (!aluno) return;
+
+    const container = document.getElementById("conteudoFicha");
+    container.innerHTML = `
+      <div style="margin-bottom: 12px; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <span class="badge-id" style="font-size:1rem;">ID: ${aluno.idMatricula || aluno.id}</span>
+          <span class="badge-origem">${aluno.origem || 'Formulário Web'}</span>
+        </div>
+      </div>
+
+      <div class="section-title">Dados Pessoais</div>
+      <div class="info-grid">
+        <div class="info-item"><label>Nome Completo</label><span>${aluno.nome || '-'}</span></div>
+        <div class="info-item"><label>CPF</label><span>${aluno.cpf || '-'}</span></div>
+        <div class="info-item"><label>RG</label><span>${aluno.rg || '-'}</span></div>
+        <div class="info-item"><label>Data Nascimento</label><span>${aluno.dataNascimento || '-'}</span></div>
+        <div class="info-item"><label>Estado Civil</label><span>${aluno.estadoCivil || '-'}</span></div>
+      </div>
+
+      <div class="section-title">Contato</div>
+      <div class="info-grid">
+        <div class="info-item"><label>Telefone / WhatsApp</label><span>${aluno.telefone || '-'}</span></div>
+        <div class="info-item"><label>E-mail</label><span>${aluno.email || '-'}</span></div>
+      </div>
+
+      <div class="section-title">Filiação</div>
+      <div class="info-grid">
+        <div class="info-item"><label>Nome da Mãe</label><span>${aluno.nomeMae || '-'}</span></div>
+        <div class="info-item"><label>Nome do Pai</label><span>${aluno.nomePai || '-'}</span></div>
+      </div>
+
+      <div class="section-title">Endereço</div>
+      <div class="info-grid">
+        <div class="info-item" style="grid-column: 1 / -1;"><label>Rua / Logradouro</label><span>${aluno.endereco || '-'}</span></div>
+        <div class="info-item"><label>Bairro</label><span>${aluno.bairro || '-'}</span></div>
+        <div class="info-item"><label>Cidade / UF</label><span>${aluno.cidade || '-'}/${aluno.estado || '-'}</span></div>
+        <div class="info-item"><label>CEP</label><span>${aluno.cep || '-'}</span></div>
+      </div>
+
+      <div class="section-title">Gestão e Observações de Pagamento</div>
+      <div>
+        <textarea id="modalObsText" class="obs-textarea" placeholder="Digite aqui o histórico de pagamento, parcelas, pendências...">${aluno.observacoesPagamento || ''}</textarea>
+        <button class="btn-save-obs" onclick="salvarObservacaoFicha('${aluno.id}')">💾 Salvar Observações</button>
+      </div>
+    `;
+
+    document.getElementById("modalFicha").style.display = "flex";
+  };
+
+  // Salvar Observação direto da Ficha
+  window.salvarObservacaoFicha = async (alunoId) => {
+    const textoObs = document.getElementById("modalObsText").value;
+    try {
+      await updateDoc(doc(db, "alunos", alunoId), {
+        observacoesPagamento: textoObs
+      });
+      alert("Observação de pagamento atualizada!");
+      fecharModal("modalFicha");
+    } catch (err) {
+      alert("Erro ao salvar: " + err.message);
+    }
+  };
+
+  // Excluir Aluno
+  window.excluirAluno = async (alunoId) => {
+    if (confirm("Tem certeza que deseja apagar permanentemente este aluno do sistema?")) {
+      try {
+        await deleteDoc(doc(db, "alunos", alunoId));
+        fecharModal("modalFicha");
+      } catch (err) {
+        alert("Erro ao excluir: " + err.message);
+      }
+    }
+  };
+
+  // Funções de Modal
+  window.fecharModal = (id) => document.getElementById(id).style.display = "none";
+  document.getElementById("btnAbrirModalAntigo").onclick = () => document.getElementById("modalAntigo").style.display = "flex";
+
+  // Cadastrar Aluno Antigo
+  document.getElementById("formAlunoAntigo").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const idLegado = "ANS-LEG-" + Math.floor(1000 + Math.random() * 9000);
+
+    const dadosAntigos = {
+      idMatricula: idLegado,
+      nome: document.getElementById("antigoNome").value,
+      email: document.getElementById("antigoEmail").value,
+      telefone: document.getElementById("antigoTelefone").value,
+      cpf: document.getElementById("antigoCpf").value,
+      rg: document.getElementById("antigoRg").value,
+      dataNascimento: document.getElementById("antigoDataNasc").value,
+      nomeMae: document.getElementById("antigoNomeMae").value,
+      nomePai: document.getElementById("antigoNomePai").value,
+      endereco: document.getElementById("antigoEndereco").value,
+      bairro: document.getElementById("antigoBairro").value,
+      cidade: document.getElementById("antigoCidade").value,
+      estado: document.getElementById("antigoEstado").value,
+      cep: document.getElementById("antigoCep").value,
+      observacoesPagamento: document.getElementById("antigoObs").value,
+      origem: "Aluno Antigo (E-mail)",
+      criadoEm: serverTimestamp()
+    };
+
+    try {
+      await setDoc(doc(db, "alunos", idLegado), dadosAntigos);
+      alert(`Aluno antigo cadastrado com sucesso!\nID Gerado: ${idLegado}`);
+      fecharModal("modalAntigo");
+      document.getElementById("formAlunoAntigo").reset();
+    } catch (err) {
+      alert("Erro ao cadastrar aluno antigo: " + err.message);
+    }
+  });
+</script>
+
+</body>
+</html>
